@@ -1,15 +1,6 @@
 {
   "abaDestino": "Precificacao_compilada",
   "alvos": [
-    { "nome": "Barreiras",         "destinoSpreadsheetId": "1OTHF2ytEOjGgfE49paARXkz9GjaklOQC_UhiXwUjC2E", "filtros": ["BAR - CCM", "BARREIRAS - STC"] },
-    { "nome": "BomJesusDaLapa",    "destinoSpreadsheetId": "1rj2V7CxbZwkan63eCeLkH9G00Gi041IZNC6vwEgq6yI", "filtros": ["BJL - CCM", "BOM JESUS DA LAPA - STC"] },
-    { "nome": "Brumado",           "destinoSpreadsheetId": "1oS619l3x_D1mXkvDpw8vs91G6ipZmsK83JqEIwPj7Uk", "filtros": ["BRU - CCM", "CCM - BRUMADO", "BRUMADO - STC", "LIV - CCM"] },
-    { "nome": "Guanambi",          "destinoSpreadsheetId": "1FO5tyhXygbbzSmmTGdnm45j4DD_rRFQgEheN8T8Wy70", "filtros": ["GUA - CCM", "GUANAMBI - MAN"] },
-    { "nome": "Ibotirama",         "destinoSpreadsheetId": "1dNwj8qWTl1k92PxI9iXwaNZYITnxuKP-kOF1QnZK3Iw", "filtros": ["IBT - CCM", "IBOTIRAMA - SIGFI", "IBOTIRAMA - STC"] },
-    { "nome": "Irece",             "destinoSpreadsheetId": "1NV0oObhLHAqnSpJKmeBBHQQxcxwlRh14TKQwO561GEw", "filtros": ["CCM - IRE", "IRECE - STC"] },
-    { "nome": "Itapetinga",        "destinoSpreadsheetId": "1rzT8o6XZi4v8j7CYLky3BD3sT5IPjv1PRb45ipBfbw4", "filtros": ["ITG - CCM"] },
-    { "nome": "Jequie",            "destinoSpreadsheetId": "1sGHf-zWXoxjnO20QBw2KWX39BSCzT8rzHdEz1hL7jyU", "filtros": ["JEQ - UTD", "JEQUIÉ - STC"] },
-    { "nome": "Livramento",        "destinoSpreadsheetId": "1gN2tR_LCuRnVCQ9tm2UURnVuMlJPVNEjvmo02TwFQCI", "filtros": ["BRU - CCM", "CCM - BRUMADO", "BRUMADO - STC", "LIV - CCM"] },
-    { "nome": "VitoriaDaConquista","destinoSpreadsheetId": "1XmpY8mqkRou-CRY68j1ljHH8W8zcROy7wnwMMSfbV7o", "filtros": ["VTC - UTD", "VTC - LPT", "VITÓRIA DA CONQUISTA - STC", "VCA - UTD", "PLANTÃO_VTC"] }
+    { "nome": "JuazeiroDoNorte", "destinoSpreadsheetId": "1-pTrlIfq4k11cH1rFSz4QOCAZ87ozRHAylcJqOAwRWQ", "filtros": ["JUAZEIRO DO NORTE"] }
   ]
 }
