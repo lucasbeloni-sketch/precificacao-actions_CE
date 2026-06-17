@@ -8,8 +8,8 @@ const SEP = String.fromCharCode(1); // separador interno de chaves (evita colisa
 
 // ====== CONFIG ======
 const CONFIG = {
-  csvFolderId: "13XQkoj7luViji2VLZTFHWIKCC9UGazve",      // pasta (shared drive) com os CSVs de origem
-  bancoFolderId: "168GVHUgng64SBtVGSDR1m35_cedAVbqS",    // pasta onde grava/atualiza o consolidado
+  csvFolderId: "1sRQT_dhvbL5bl4yHvJazsD5GTeqFQoRD",      // pasta (shared drive) com os CSVs de origem
+  bancoFolderId: "17Jyopo6qV7RDbD9QKEQSjx0TrjI5J-7b",    // pasta onde grava/atualiza o consolidado
   bancoFileName: "BANCO.csv",
   uploadBanco: true,
   spreadsheetId: shared.bdSpreadsheetId, // planilha de ligacao (alimenta o estagio 2)
