@@ -45,6 +45,20 @@ test("consolidar: descarta cod vazio, agrupa, soma, dedup e ordena", () => {
   ]);
 });
 
+test("consolidar: cod numerico puro vira Number; texto/zero-a-esquerda fica string", () => {
+  const idx = [0, 1, 2, 3, 4];
+  const rows = [
+    ["CT1", "7208192", "A", "1", "1"],   // digito puro -> Number
+    ["CT1", "007", "B", "1", "1"],         // zero a esquerda -> string (preserva)
+    ["CT1", "B-100", "C", "1", "1"],       // tem traco -> string
+  ];
+  const out = consolidar(rows, idx);
+  const byDes = Object.fromEntries(out.map((r) => [r[2], r[1]]));
+  assert.strictEqual(byDes["A"], 7208192);   // number
+  assert.strictEqual(byDes["B"], "007");      // string preservada
+  assert.strictEqual(byDes["C"], "B-100");    // string
+});
+
 test("consolidar: dedup de linha exata (não soma duplicata idêntica)", () => {
   const idx = [0, 1, 2, 3, 4];
   const rows = [

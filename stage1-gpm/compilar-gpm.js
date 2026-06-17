@@ -70,7 +70,16 @@ function consolidar(rows, idx) {
       a.cod < b.cod ? -1 : a.cod > b.cod ? 1 :
       a.des < b.des ? -1 : a.des > b.des ? 1 : 0
     )
-    .map((r) => [r.centro, r.cod, r.des, r.qtd, r.valor]);
+    .map((r) => [r.centro, codCell(r.cod), r.des, r.qtd, r.valor]);
+}
+
+// cod_pep_obra: se for inteiro puro sem perda (sem zero a esquerda, dentro de
+// MAX_SAFE_INTEGER), devolve Number pra colar como numero na BD (RAW). Caso
+// contrario (ex: "B-100", zero a esquerda, codigo gigante) mantem texto.
+function codCell(cod) {
+  if (!/^\d+$/.test(cod)) return cod;
+  const n = Number(cod);
+  return Number.isSafeInteger(n) && String(n) === cod ? n : cod;
 }
 
 // Monta o CSV pt-BR (sep ;, decimal virgula, BOM utf-8-sig) — paridade com o BANCO.csv antigo.
