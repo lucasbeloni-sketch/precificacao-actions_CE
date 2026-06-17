@@ -43,7 +43,7 @@ function sniffDelimiter(text) {
   return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
 }
 
-// Consolida linhas cruas: dedup de linha exata, filtra cod_pep_obra "B-",
+// Consolida linhas cruas: dedup de linha exata, descarta cod_pep_obra vazio,
 // agrupa por (centro, cod, des) somando qtd e valor, ordena ordinal. Funcao pura.
 function consolidar(rows, idx) {
   const seen = new Set();
@@ -55,7 +55,7 @@ function consolidar(rows, idx) {
 
     const centro = String(row[idx[0]] ?? "").trim();
     const cod = String(row[idx[1]] ?? "").trim().toUpperCase();
-    if (!cod.startsWith("B-")) continue;
+    if (!cod) continue;
     const des = String(row[idx[2]] ?? "").trim();
 
     const key = [centro, cod, des].join(SEP);
@@ -220,7 +220,7 @@ async function main() {
 
   // guard: zero registros validos -> nao zera a BD
   if (!rows.length) {
-    throw new Error("Nenhum registro valido (cod_pep_obra 'B-'). Abortando para nao zerar a BD.");
+    throw new Error("Nenhum registro valido (cod_pep_obra vazio). Abortando para nao zerar a BD.");
   }
   console.log(`[stage1] Linhas consolidadas: ${rows.length}`);
 

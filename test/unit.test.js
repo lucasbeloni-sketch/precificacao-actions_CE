@@ -27,19 +27,21 @@ test("sniffDelimiter: detecta ; , tab e ignora dentro de aspas", () => {
   assert.equal(sniffDelimiter("x;y\nz,w"), ";");  // só olha a 1a linha
 });
 
-test("consolidar: filtra B-, agrupa, soma, dedup e ordena", () => {
+test("consolidar: descarta cod vazio, agrupa, soma, dedup e ordena", () => {
   const idx = [0, 1, 2, 3, 4];
   const rows = [
     ["CT1", "B-100", "Atividade A", "10,00", "100,00"],
     ["CT1", "B-100", "Atividade A", "5,00", "50,00"],   // mesmo grupo -> soma
-    ["CT1", "C-200", "Atividade X", "9,00", "9,00"],     // não B- -> fora
+    ["CT1", "C-200", "Atividade X", "9,00", "9,00"],     // sem prefixo: entra
+    ["CT1", "",      "Atividade Y", "7,00", "7,00"],      // cod vazio -> fora
     ["CT0", "B-100", "Atividade A", "1,00", "1,00"],     // centro diferente -> outro grupo
   ];
   const out = consolidar(rows, idx);
-  // ordena por centro (CT0 antes de CT1)
+  // ordena por centro (CT0 antes de CT1), depois cod (B- antes de C-)
   assert.deepEqual(out, [
     ["CT0", "B-100", "Atividade A", 1, 1],
     ["CT1", "B-100", "Atividade A", 15, 150],
+    ["CT1", "C-200", "Atividade X", 9, 9],
   ]);
 });
 
