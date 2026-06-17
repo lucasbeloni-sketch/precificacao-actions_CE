@@ -1,0 +1,16 @@
+{
+  "name": "precificacao-pipeline",
+  "version": "2.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "stage1": "node stage1-gpm/compilar-gpm.js",
+    "stage2": "node stage2-unidades/compile.js",
+    "pipeline": "npm run stage1 && npm run stage2",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "csv-parse": "^5.5.6"
+  }
+}

@@ -1,0 +1,58 @@
+name: Pipeline Precificacao
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # a cada 6h (UTC). Ajusta se quiser.
+  workflow_dispatch: {}      # botao manual na aba Actions
+
+permissions:
+  contents: read
+  issues: write              # pra abrir/comentar issue de falha
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+
+      - name: Install deps
+        run: npm ci || npm install
+
+      - name: Testes unitarios
+        run: npm test
+
+      # Estagio 1: CSVs do Drive -> consolida -> BD_Precificacao + BANCO.csv
+      - name: Stage 1 - compila GPM
+        run: npm run stage1
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      # Estagio 2: BD_Precificacao -> distribui nas 10 planilhas (so roda se o 1 passou)
+      - name: Stage 2 - distribui por unidade
+        run: npm run stage2
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+  # Notifica falha: mantem 1 issue rolante (comenta se ja existe, senao abre).
+  notify:
+    needs: pipeline
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const label = "pipeline-falha";
+            const url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const { owner, repo } = context.repo;
+            const open = await github.rest.issues.listForRepo({ owner, repo, state: "open", labels: label });
+            const body = `Pipeline falhou no run ${context.runId}.\n\nLog: ${url}\n\nAs planilhas podem estar com dados desatualizados ate o proximo run dar certo.`;
+            if (open.data.length) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: open.data[0].number, body });
+            } else {
+              await github.rest.issues.create({ owner, repo, title: "Pipeline Precificacao falhando", body, labels: [label] });
+            }
